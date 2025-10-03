@@ -1,14 +1,12 @@
 # Mini-starter-guides for Devs testing new software
 
+> **Prereqs**: **Linux/macOS.** Docker 24+ and Docker Compose v2, by default.
+
 ## Meilisearch
 
 **What it is:** Lightweight, super-fast search engine.
 
 **Time:** ~5–10 min.
-
-**Prereqs**
-
-Docker 24+ and Docker Compose v2.
 
 ### Quickstart
 ```
@@ -44,11 +42,7 @@ curl http://localhost:7700/health
 
 **What it is:** Gen-AI chat + enterprise search you can run locally.
 
-**Time:** ~5–20 min on a dev laptop.
-
-**Prereqs**
-
-Docker 24+ and Docker Compose v2.
+**Time:** ~10–20 min on a dev laptop.
 
 ### Quickstart
 
@@ -99,10 +93,6 @@ docker compose down -v
 
 **Time:** ~8–10 min.
 
-**Prereqs**
-
-Docker 24+ and Docker Compose v2.
-
 ### Quickstart
 ```
 git clone https://github.com/nocodb/nocodb
@@ -123,4 +113,40 @@ Open http://localhost:8080 and complete onboarding.
 ### Cleanup
 ```
 docker compose down -v
+```
+
+## Open WebUI
+
+**What it is:** Friendly web UI to chat with local/remote LLMs (works great with Ollama).
+
+**Time:** ~5–10 min.
+
+> Need to use a persistent volume for the app’s data.
+
+### Quickstart
+
+```
+# Persistent named volume recommended
+docker run -d --name openwebui \
+  -p 3000:3000 \
+  -v open-webui:/app/backend/data \
+  ghcr.io/open-webui/open-webui:latest
+```
+
+### Test it works
+
+Open http://localhost:3000 => create admin user, log in. 
+
+### Optional: Pair with Ollama
+
+Install Ollama separately, then in Open WebUI add/point to your Ollama instance.
+
+### Common tweaks
+
+* GPU / advanced flags and a sample docker-compose.yml are in the docs.
+
+### Cleanup
+
+```
+docker rm -f openwebui && docker volume rm open-webui
 ```
